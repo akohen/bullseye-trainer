@@ -5,11 +5,10 @@ let AnswerForm = props => {
   const { handleSubmit } = props
   return (
     <form onSubmit={ handleSubmit }>
-      <div>
-        <Field name="bearing" component="input" type="number" placeholder="Bearing" />
-        <Field name="range" component="input" type="number" placeholder="Range" />
-        <button type="submit">Submit</button>
-      </div>
+      <h3>Target position from yours</h3>
+      <Field name="bearing" component="input" type="number" placeholder="Bearing" autoFocus />
+      <Field name="range" component="input" type="number" placeholder="Range" />
+      <button type="submit">Submit</button>
     </form>
   )
 }

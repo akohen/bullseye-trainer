@@ -6,34 +6,53 @@ import Point from '../../components/point'
 import AnswerForm from '../../components/form'
 import TopView from '../../components/topview'
 
-const App = props => (
-  <div>
+const App = props => {
+  let controls = null
+  if(!props.positions.difference) {
+    controls = <AnswerForm onSubmit={props.giveanswer} onChange={props.changeValues} />
+  } else {
+    let grade = ''
+    if(props.positions.error.ratio >= 0.8) {
+      grade = 'Bad'
+    } else if(props.positions.error.ratio > 0.4) {
+      grade = 'OK'
+    } else if(props.positions.error.ratio > 0.1) {
+      grade = 'Good'
+    } else {
+      grade = 'Perfect!'
+    }
+    controls = <div>
+      <h4>Target position from you</h4>
+      <Point point={props.positions.relative} />
+
+      <h4>Difference between guess and target position</h4>
+      <Point point={props.positions.error} />
+      <p>{grade}</p>
+      
+      <TopView positions={props.positions}/>
+      <p className="next"><button onClick={props.random} autoFocus>Next</button></p>
+    </div>
+  } 
+  return (
+  <div className="flex-grid">
+    <div className="col">
     <h1>Bullseye trainer</h1>
 
     <h4>Your position from bulls</h4>
-    <Point point={props.A} />
+    <Point point={props.positions.A} />
 
     <h4>Target position from bulls</h4>
-    <Point point={props.B} />
+    <Point point={props.positions.B} />
+    </div>
+    <div className="col">
+    {controls}
+    </div>
     
-    <h4>Target position from you</h4>
-    <Point point={props.relative} />
-
-    <h4>Guessed position from the target position</h4>
-    <Point point={props.diff} />
-    
-    <AnswerForm onSubmit={props.giveanswer} onChange={props.changeValues} />
-    <p><button onClick={props.random}>Next</button></p>
-    <TopView positions={props.positions}/>
   </div>
-)
+)}
 
 const mapStateToProps = state => ({
   positions: state.bullseye,
-  A: state.bullseye.A,
-  B: state.bullseye.B,
-  relative:state.bullseye.rel,
-  diff: state.bullseye.difference,
   changeValues: args => { state.bullseye.bearing = args.bearing; state.bullseye.range = args.range }
 })
 

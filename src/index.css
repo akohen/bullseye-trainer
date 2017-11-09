@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  margin: 0;
+  margin: 0px 10px;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 1rem;
@@ -12,4 +12,21 @@ body {
 
 button:disabled {
   opacity: 0.5;
+}
+
+.flex-grid {
+  display: flex;
+}
+.col {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .flex-grid {
+    display: block;
+  }
+}
+
+.next {
+    text-align: center;
 }

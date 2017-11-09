@@ -6,8 +6,7 @@ const Point = props => {
 
   return (
     <p>
-      Bearing {Math.round(props.point.bearing)}° / Range {Math.round(props.point.range)}nm
-      lat {Math.round(props.point.lat)} / lon {Math.round(props.point.lon)}
+      Bearing {Math.round(props.point.bearing)}° Range {Math.round(props.point.range)}nm
     </p>)
 }
 

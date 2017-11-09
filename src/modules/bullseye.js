@@ -39,10 +39,11 @@ const newState = () => {
   return {
     A:A,
     B:B,
-    rel:A.getRelativePosition(B),
+    relative:A.getRelativePosition(B),
     answer:null,
-    bearing:null,
-    range:null
+    bearing:0,
+    range:0,
+    difference:null
   }
 }
 
@@ -55,9 +56,21 @@ export default (state = newState(), action) => {
       }
 
     case ANSWER:
+      let bearing = state.bearing || 0
+      let range = state.range || 0
+
+      let difference = state.relative.getRelativePosition( new Point({bearing:bearing,range:range}) )
+
+      let error = new Point({
+        bearing:Math.abs(Math.round(state.relative.bearing - bearing)),
+        range:difference.range
+      })
+      error.ratio = error.range / state.relative.range
+      
       return {
         ...state,
-        difference: state.rel.getRelativePosition( new Point({bearing:state.bearing,range:state.range}) )
+        difference: difference,
+        error: error,
       }
 
     default:

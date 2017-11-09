@@ -54,7 +54,10 @@ class TopView extends React.Component {
         ctx.strokeStyle = "red"
         ctx.fillStyle = "red"
         ctx.beginPath()
-        ctx.arc(x, y,5,0,2*Math.PI)
+        ctx.moveTo(x-3,y)
+        ctx.lineTo(x+3,y)
+        ctx.moveTo(x,y-3)
+        ctx.lineTo(x,y+3)
         ctx.stroke()
     }
     render() {

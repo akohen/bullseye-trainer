@@ -1,20 +1,45 @@
-import React from 'react';
-import { Route, Link } from 'react-router-dom'
-import Home from '../home'
-import About from '../about'
+import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { random, giveanswer } from '../../modules/bullseye'
+import Point from '../../components/point'
+import AnswerForm from '../../components/form'
 
-const App = () => (
+const App = props => (
   <div>
-    <header>
-      <Link to="/">Home</Link>
-      <Link to="/about-us">About</Link>
-    </header>
+    <h1>Bullseye trainer</h1>
 
-    <main>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/about-us" component={About} />
-    </main>
+    <h4>Your position from bulls</h4>
+    <Point point={props.A} />
+
+    <h4>Target position from bulls</h4>
+    <Point point={props.B} />
+    
+    <h4>Target position from you</h4>
+    <Point point={props.relative} />
+
+    <h4>Guessed position from the target position</h4>
+    <Point point={props.diff} />
+    
+    <AnswerForm onSubmit={props.giveanswer} onChange={props.changeValues} />
+    <p><button onClick={props.random}>Random</button></p>
   </div>
 )
 
-export default App
+const mapStateToProps = state => ({
+  A: state.bullseye.A,
+  B: state.bullseye.B,
+  relative:state.bullseye.rel,
+  diff: state.bullseye.difference,
+  changeValues: args => { state.bullseye.bearing = args.bearing; state.bullseye.range = args.range }
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  random,
+  giveanswer,
+}, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

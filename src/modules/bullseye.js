@@ -5,7 +5,7 @@ export const ANSWER = 'bullseye/ANSWER'
 
 const BEARING_RESOLUTION = 10 // Angular resolution, in degrees
 const RANGE_RESOLUTION = 5 // Range resolution, in nm
-const RANGE_MAX = 40 // maximum range, in nm
+const RANGE_MAX = 25 // maximum range, in nm
 const RANGE_MIN = 5 // minimum range, in nm
 
 class Point {

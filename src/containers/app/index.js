@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { random, giveanswer } from '../../modules/bullseye'
 import Point from '../../components/point'
 import AnswerForm from '../../components/form'
+import TopView from '../../components/topview'
 
 const App = props => (
   <div>
@@ -22,11 +23,13 @@ const App = props => (
     <Point point={props.diff} />
     
     <AnswerForm onSubmit={props.giveanswer} onChange={props.changeValues} />
-    <p><button onClick={props.random}>Random</button></p>
+    <p><button onClick={props.random}>Next</button></p>
+    <TopView positions={props.positions}/>
   </div>
 )
 
 const mapStateToProps = state => ({
+  positions: state.bullseye,
   A: state.bullseye.A,
   B: state.bullseye.B,
   relative:state.bullseye.rel,

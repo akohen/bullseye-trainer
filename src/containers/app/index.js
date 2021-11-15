@@ -27,7 +27,7 @@ const App = props => {
 
       <h4>Difference between guess and target position</h4>
       <Point point={props.positions.error} />
-      <p>{grade}</p>
+      <p>{grade} - Score: {props.positions.score}/{props.positions.tries}</p>
       
       <TopView positions={props.positions}/>
       <p className="next"><button onClick={props.random} autoFocus>Next</button></p>

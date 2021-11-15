@@ -43,6 +43,8 @@ const newState = () => {
     answer:null,
     bearing:0,
     range:0,
+    score:0,
+    tries:0,
     difference:null
   }
 }
@@ -52,7 +54,9 @@ export default (state = newState(), action) => {
     case RANDOM:
       return {
         ...state,
-        ...newState()
+        ...newState(),
+        score: state.score,
+        tries: state.tries,
       }
 
     case ANSWER:
@@ -62,15 +66,18 @@ export default (state = newState(), action) => {
       let difference = state.relative.getRelativePosition( new Point({bearing:bearing,range:range}) )
 
       let error = new Point({
-        bearing:Math.abs(Math.round(state.relative.bearing - bearing)),
-        range:difference.range
+        bearing: Math.abs(Math.round(state.relative.bearing - bearing)),
+        range: difference.range
       })
       error.ratio = error.range / state.relative.range
+      let score = Math.round((1 - Math.min(1, error.ratio))*10)
       
       return {
         ...state,
         difference: difference,
         error: error,
+        score: state.score + score,
+        tries: state.tries + 10,
       }
 
     default:
